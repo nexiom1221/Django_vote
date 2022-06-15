@@ -1,0 +1,70 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<div class="outer">
+    <form method="post" action=".">
+        {% csrf_token %}
+        {% if view_select %}
+            <div>
+                <strong><label for="question" style="font-size: large;">質問</label></strong><br><br>
+                <input type="text" name="question" value="{{ question.question_text }}" class ="js-max-char-warning" placeholder="20文字以内に入力" data-max-length-warning="質問は20文字以内でおねがいします。"  data-max-length="20" data-max-length-warning-container="name" onInput="checkForm(this)">
+            </div>
+            
+            <span class="name"></span>
+
+            <br>
+            <div>
+                <strong><label for="select_list" style="font-size: large;">選択肢</label></strong><br><br>
+                {% for choice in question.choice_set.all %}
+                    <input type="text" name="select{{ forloop.counter }}" value="{{ choice.choice_text }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="選択肢は20文字以内でおねがいします。"  data-max-length="20" data-max-length-warning-container="name2" onInput="checkForm(this)"><br>
+                {% endfor %}
+                {% if question.choice_set.count == 2 %}
+                    <input type="text" name="select3" value="{{ select_all.select3 }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="選択肢は20文字以内でおねがいします。"  data-max-length="20" data-max-length-warning-container="name2" ><br>
+                    <input type="text" name="select4" value="{{ select_all.select4 }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="選択肢は20文字以内でおねがいします。"  data-max-length="20" data-max-length-warning-container="name2" ><br>
+                {% elif question.choice_set.count == 3 %}
+                    <input type="text" name="select4" value="{{ select_all.select4 }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="選択肢は20文字以内でおねがいします。"  data-max-length="20" data-max-length-warning-container="name2" ><br>
+                {% endif %}
+            </div>
+
+            <span class="name2"></span>
+
+            <div>
+                {% if no_modify %}
+                <button type="button" onclick="location.href='/polls/{{ question.id }}'">詳細に戻る</button>
+                {% else %}
+                <button type="submit">更新する</button>
+                <button type="button" onclick="location.href='/polls/{{ question.id }}'">詳細に戻る</button>
+                {% endif %}
+            </div>
+        {% else %}
+            <div>
+                <strong><label for="question" style="font-size: large;">質問</label></strong><br><br>
+                <input type="text" name="question" value="{{ new_question }}" class ="js-max-char-warning" placeholder="20文字以内に入力" data-max-length-warning="質問は20文字以内でおねがいします。"  data-max-length="20" data-max-length-warning-container="name2" onInput="checkForm(this)">
+                <span class="name"></span>
+            </div><br>
+
+            <div>
+                <strong><label for="select_list" style="font-size: large;">選択肢</label></strong><br><br>
+                <input type="text" name="select1" value="{{ select_all.select1 }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="20文字以内でおねがいします"  data-max-length="20" data-max-length-warning-container="name2" onInput="checkForm(this)"><br>
+                <input type="text" name="select2" value="{{ select_all.select2 }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="20文字以内でおねがいします"  data-max-length="20" data-max-length-warning-container="name2" onInput="checkForm(this)"><br>
+                <input type="text" name="select3" value="{{ select_all.select3 }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="20文字以内でおねがいします"  data-max-length="20" data-max-length-warning-container="name2" onInput="checkForm(this)"><br>
+                <input type="text" name="select4" value="{{ select_all.select4 }}" class ="js-max-char-warning2" placeholder="20文字以内に入力" data-max-length-warning="20文字以内でおねがいします"  data-max-length="20" data-max-length-warning-container="name2" onInput="checkForm(this)"><br>
+            </div>
+
+            <span class="name2"></span>
+
+            {% for error in error_messages %}
+            <div style="color: red;">
+                <strong>{{error}}</strong><br>
+            </div>
+            {% endfor %}
+
+            <div>
+                <button type="submit">更新する</button>
+                <button type="button" onclick="location.href='/polls/{{ question.id }}'">詳細に戻る</button>
+            </div>
+
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

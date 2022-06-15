@@ -1,0 +1,74 @@
+{% load mathfilters %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <!-- jQuery library (served from Google) -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <!-- jcSlider Javascript file -->
+        <script src="jquery.maxcharwarning.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
+        <script type="text/javascript" src="{% static 'polls/style.js' %}"></script>
+        <script type="text/javascript" src="{% static 'polls/style2.js' %}"></script>
+        <script type="text/javascript">
+
+            function checkForm($this)
+            {
+            $(document).on("change", 'input', function(){
+            let str = $(this).val()
+            str = str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(s) {
+            return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+            });
+
+            $(this).val(str);
+            });
+            }
+
+        </script>
+
+        <style>
+            .outer {
+                text-align: center;
+            }
+            .inner {
+                display: inline-block;
+            }
+            td {
+                vertical-align : middle;
+                text-align: left;
+            }   
+            .button {
+                display: inline-block;
+                border-style: solid;
+                color: black;
+                background-color: rgb(225, 224, 224);
+                border-width:1px;
+                border-color: darkgray;
+                text-decoration: none;
+            }
+            .input-error{
+                box-shadow: 0 0 5px red;
+                border: 1px solid red;
+            }
+            .name{
+                font-size:15px;
+                color:red;
+                font-weight: bold;
+            }
+            .name2{
+                font-size:15px;
+                color:red;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body>  
+        <div class="container">
+        {% block content %}
+        {% endblock %}
+        </div>
+    </body>
+</html>

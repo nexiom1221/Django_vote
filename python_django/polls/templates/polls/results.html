@@ -1,0 +1,22 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<div class="outer">
+    <h1>{{ question.question_text }}</h1>
+    
+    <div class="inner">
+        <table>
+            {% for choice in question.choice_set.all %}
+            <tr>
+                <td>{{ choice.choice_text }}</td>
+                <td>--</td> 
+                <td>{{ choice.votes }}票</td>    
+            </tr>
+            {% endfor %}
+        </table>
+    <br>
+    <button type="button" onclick="location.href='/polls/{{ question.id }}/'">もう一回投票する</button>
+    <button type="button" onclick="location.href='/polls/'">一覧画面に戻る</button>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'polls/base.html' %}
+
+{% block content %}
+<div class="outer">
+    <form method="POST">
+    {% csrf_token %}
+        <h2>{{ question.question_text }}</h2>
+        <p>この質問を削除しますか？</p>
+        <a href="javascript:history.back();"><button>はい</button></a>
+        <button type="button" onclick="location.href='/polls/?page={{pages}}&search={{ search }}&searchDateFrom={{searchDateFrom}}&searchDateTo={{searchDateTo}}'">前の画面に戻る</button>
+    </form>
+</div>
+{% endblock %}
